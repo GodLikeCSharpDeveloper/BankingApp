@@ -15,5 +15,10 @@ namespace BankingApp.Repositories.Account
         {
             return AsQueryable().AsNoTracking().FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
         }
+
+        public Task<List<AccountEntity>> GetAllAsync()
+        {
+            return AsQueryable().AsNoTracking().OrderBy(a => a.AccountNumber).ToListAsync();
+        }
     }
 }

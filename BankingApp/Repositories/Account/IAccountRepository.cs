@@ -6,5 +6,6 @@ namespace BankingApp.Repositories.Account
     {
         Task<AccountEntity?> FindByAccountNumberAsync(string accountNumber);
         Task<AccountEntity?> FindTrackedByAccountNumberAsync(string accountNumber);
+        Task<List<AccountEntity>> GetAllAsync();
     }
 }

@@ -3,7 +3,6 @@ using BankingApp.Entities;
 using BankingApp.Exceptions;
 using BankingApp.Models;
 using BankingApp.Repositories.Account;
-using Microsoft.EntityFrameworkCore;
 
 namespace BankingApp.Services.Account
 {
@@ -24,7 +23,7 @@ namespace BankingApp.Services.Account
 
         public async Task<List<GetAccountDto>> GetAllAsync()
         {
-            var accounts = await _accountRepository.AsQueryable().OrderBy(ac => ac.AccountNumber).ToListAsync();
+            var accounts = await _accountRepository.GetAllAsync();
             return _mapper.Map<List<GetAccountDto>>(accounts);
         }
 

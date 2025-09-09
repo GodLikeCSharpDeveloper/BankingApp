@@ -4,6 +4,7 @@ using BankingApp.Repositories;
 using BankingApp.Repositories.Account;
 using BankingApp.Services.Account;
 using BankingApp.Services.Funds;
+using BankingApp.Services.Queue;
 using BankingApp.Services.Retry;
 using BankingApp.Services.Transaction;
 using BankingApp.Validation;
@@ -26,7 +27,7 @@ namespace BankingApp.Extensions
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IFundsService, FundsService>();
 
-            services.AddSingleton<IOperationQueue, InMemoryOperationQueue>();
+            services.AddSingleton<IOperationQueue, ChannelOperationQueue>();
 
             services.AddSingleton<IRetryService, RetryService>();
 

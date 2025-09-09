@@ -13,11 +13,6 @@ builder.Services.AddBankingAppDependencies();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    builder.Configuration.GetSection("Kestrel").Bind(options);
-});
-
 var app = builder.Build();
 
 app.UseSwagger();

@@ -1,6 +1,6 @@
 ﻿using BankingApp.Models;
-using BankingApp.Services.Account;
 using BankingApp.Services.Funds;
+using BankingApp.Services.Queue;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,14 +17,22 @@ namespace BankingApp.Controllers
         [HttpPost("deposit")]
         public async Task<IActionResult> Deposit([FromBody] DepositModel model)
         {
-            await _operationQueue.EnqueueAsync(() => _fundsService.DepositAsync(model));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await _operationQueue.EnqueueAsync((token) => _fundsService.DepositAsync(model, token));
             return Ok();
         }
 
         [HttpPost("withdraw")]
         public async Task<IActionResult> Withdraw([FromBody] DepositModel model)
         {
-            await _operationQueue.EnqueueAsync(() => _fundsService.WithdrawAsync(model));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await _operationQueue.EnqueueAsync((token) => _fundsService.WithdrawAsync(model, token));
             return Ok();
         }
 
@@ -36,7 +44,7 @@ namespace BankingApp.Controllers
             {
                 return BadRequest(validationResult.Errors);
             }
-            await _operationQueue.EnqueueAsync(() => _fundsService.TransferAsync(model));
+            await _operationQueue.EnqueueAsync((token) => _fundsService.TransferAsync(model, token));
             return Ok();
         }
     }

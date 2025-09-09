@@ -7,7 +7,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:8080
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "8080:8080"
+      - "8085:8080"
     depends_on:
       postgres:
         condition: service_healthy
